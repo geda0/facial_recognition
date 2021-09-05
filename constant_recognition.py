@@ -136,8 +136,6 @@ while True:
                     f = open("encodings.pickle", "wb")
                     f.write(pickle.dumps(data))
                     f.close()
-                    # ******************** reload thye model
-                    data = pickle.loads(open(encodingsP, "rb").read())
                     img_counter = 0
             img_counter += 1
 
