@@ -40,6 +40,7 @@ fps = FPS().start()
 # loop over frames from the video file stream
 unknowns = 1
 img_counter = 0
+recognizing = False
 while True:
     # grab the frame from the threaded video stream and resize it
     # to 500px (to speedup processing)
@@ -84,18 +85,24 @@ while True:
                 # if currentname == "Unknown":
                 currentname = name
                 print(currentname)
+                os.system('echo %s | festival --tts & ' % "Hello, friend number {}".format(currentname))
 
 
         if name == "Unknown":
             Path("dataset/{}".format(unknowns)).mkdir(exist_ok=True)
+            if not recognizing:
+                recognizing = True
+                os.system('echo %s | festival --tts & ' % 'hi. my name is towtwo. I am recognizing you')
             if True: #img_counter %2 == 1:
                 img_name = "dataset/{}/image_{}.jpg".format(unknowns,img_counter)
                 cv2.imwrite(img_name, image)
                 print("{} written!".format(img_name))
                 if img_counter >= 10:
-                    unknowns += 1
                     # *********************** train the model
                     # our images are located in the dataset folder
+                    os.system('echo %s | festival --tts & ' % "Facial recognition complete. You are now friend number {}".format(unknowns))
+                    recognizing = False
+                    unknowns += 1
                     print("[INFO] start processing faces...")
                     imagePaths = list(paths.list_images("dataset"))
 
